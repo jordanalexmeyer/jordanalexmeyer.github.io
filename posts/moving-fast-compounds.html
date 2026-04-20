@@ -417,11 +417,14 @@
   }
   .levers {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--rule);
     border: 1px solid var(--rule);
     margin: 40px 0;
+  }
+  @media (max-width: 640px) {
+    .levers { grid-template-columns: 1fr; }
   }
   .lever {
     background: var(--bg);
@@ -551,7 +554,7 @@
 
   <p>But here's where it gets interesting. Because the fast company grows faster, it <strong>raises larger rounds at higher valuations</strong>. That's not a modeling assumption &mdash; it's how venture capital actually works. Growth rate drives valuation, and valuation drives round size. The fast company can hire at 12%/month post-Series A; the slow company, funded at a lower valuation, can only manage 5%/month. After Series B, the fast company's higher capitalization lets it attract better talent and invest in better tooling, so per-person productivity bumps another 15%.</p>
 
-  <p>Both companies hit their milestones the same way: by actually crossing a cumulative work threshold. No exogenous timing is imposed. The slow company eventually reaches every milestone the fast company does &mdash; it just takes longer.</p>
+  <p>Both companies hit their milestones the same way: by actually crossing a cumulative work threshold. The slow company eventually reaches every milestone the fast company does &mdash; it just takes longer.</p>
 
   <div class="assumptions">
     <div class="label">Model parameters</div>
