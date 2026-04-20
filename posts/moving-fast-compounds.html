@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving fast compounds &mdash; Jordan Meyer</title>
+<meta name="description" content="Why small speed advantages turn into exponential leads. A visual model of how startup execution speed compounds through funding milestones.">
+<meta property="og:title" content="Moving fast compounds">
+<meta property="og:description" content="Why a 20% speed advantage turns into a 5.8x output gap in five years.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-deep: #ebe4d3;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4744;
+    --ink-muted: #78736c;
+    --rule: #d9d2c0;
+    --accent: #c73e1d;
+    --fast: #1a1a1a;
+    --slow: #a8a39a;
+    --chart-bg: #faf7ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a17;
+      --bg-deep: #141210;
+      --ink: #f0ebdf;
+      --ink-soft: #c9c3b4;
+      --ink-muted: #8a857b;
+      --rule: #3a362e;
+      --accent: #e8593a;
+      --fast: #f0ebdf;
+      --slow: #6a655c;
+      --chart-bg: #242019;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 32px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+  }
+  .masthead a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .masthead a:hover { color: var(--accent); }
+  .masthead .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 32px 60px;
+    position: relative;
+  }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kicker::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    max-width: 200px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+    max-width: 1000px;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    max-width: 900px;
+  }
+  .meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .meta-item .value {
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+  .section-wide {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 60px 0 28px;
+  }
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.3;
+    margin: 40px 0 16px;
+  }
+  p {
+    margin-bottom: 1.2em;
+    color: var(--ink-soft);
+  }
+  p.lead {
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-weight: 400;
+    margin-bottom: 1.4em;
+  }
+  p.lead::first-letter {
+    font-size: 4.5em;
+    font-weight: 500;
+    float: left;
+    line-height: 0.85;
+    margin: 0.08em 0.08em 0 0;
+    color: var(--accent);
+    font-style: italic;
+  }
+  em { font-style: italic; }
+  strong { font-weight: 500; color: var(--ink); }
+  p a, .lead a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  p a:hover, .lead a:hover {
+    color: var(--accent);
+    background: rgba(199, 62, 29, 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    p a:hover, .lead a:hover {
+      background: rgba(232, 89, 58, 0.1);
+    }
+  }
+  .math {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    background: var(--bg-deep);
+    padding: 20px 24px;
+    border-left: 2px solid var(--accent);
+    margin: 28px 0;
+    color: var(--ink);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin: 60px -20px;
+    padding: 40px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    text-align: left;
+  }
+  .pullquote::before {
+    content: "\201C";
+    display: block;
+    font-size: 1.5em;
+    line-height: 0.5;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .pullquote cite {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-top: 24px;
+  }
+  .chart-section {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 80px 32px;
+    margin: 80px 0;
+  }
+  .chart-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+  }
+  .chart-fignum {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sw-solid, .sw-dash {
+    display: inline-block;
+    width: 24px;
+  }
+  .sw-solid { height: 3px; border-radius: 1px; }
+  .sw-dash { height: 0; border-top: 2px dashed currentColor; }
+  .sw-fast { background: var(--fast); color: var(--fast); }
+  .sw-slow { background: var(--slow); color: var(--slow); }
+  .chart-block {
+    margin-bottom: 40px;
+  }
+  .chart-block:last-of-type {
+    margin-bottom: 0;
+  }
+  .chart-label {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .chart-label .idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid var(--accent);
+    align-self: center;
+  }
+  .chart-label .axis-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin-left: auto;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: var(--chart-bg);
+    border: 1px solid var(--rule);
+    padding: 16px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .stat {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 24px;
+    background: var(--bg);
+  }
+  .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .stat .value {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat .value em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .assumptions {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 40px 0;
+    font-size: 16px;
+  }
+  .assumptions .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .assumptions dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 20px;
+    align-items: baseline;
+  }
+  .assumptions dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  .assumptions dd {
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .levers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+  .lever {
+    background: var(--bg);
+    padding: 28px;
+  }
+  .lever .num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .lever h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .lever p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.15s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 80px;
+    padding: 40px 32px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+  }
+  footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  footer a:hover { color: var(--accent); }
+  footer .accent {
+    color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 48px 24px 40px; }
+    .section, .section-wide { padding: 40px 24px; }
+    .chart-section { padding: 48px 20px; margin: 48px 0; }
+    .chart-wrap { height: 260px; padding: 8px; }
+    .chart-label { font-size: 16px; }
+    .chart-label .axis-note { margin-left: 0; width: 100%; }
+    .pullquote { margin: 40px 0; padding: 32px 0; }
+    .masthead { padding: 16px 24px; }
+    .stat { padding: 20px; }
+    .stat .value { font-size: 32px; }
+    .math { font-size: 13px; padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="masthead">
+  <div><a href="../index.html"><span class="dot"></span>Jordan Meyer</a></div>
+  <div><a href="../index.html">&larr; Index</a></div>
+</div>
+
+<header class="hero">
+  <div class="kicker">A thesis on execution velocity</div>
+  <h1>Moving fast <em>compounds.</em></h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="label">Subject</div>
+      <div class="value">Why small speed advantages become exponential leads</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Model</div>
+      <div class="value">Five-year simulation from seed to Series C</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Result</div>
+      <div class="value">A 20% edge becomes a 4.5x output gap</div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <p class="lead">Sam Altman once <a href="https://twitter.com/sama/status/1345140364995227648" target="_blank" rel="noopener">tweeted</a> that moving fast compounds. It's one of those claims that sounds true and gets retweeted, but is rarely proven. The math, it turns out, works &mdash; and the mechanism is more interesting than the slogan suggests.</p>
+
+  <p>The easy version goes like this. If two companies grow exponentially but at different rates, the absolute gap between them grows exponentially. The ratio of their sizes also grows exponentially. If you ship at rate <em>k</em> and your competitor ships at <em>k/s</em>, the ratio of your size to theirs is:</p>
+
+  <div class="math">R_you(t) / R_them(t) = e^(k(1 &minus; 1/s) t)</div>
+
+  <p>This is true and useful as a first cut. But it's abstract. It assumes growth just <em>happens</em> at some rate, which isn't how startups actually work. Startups grow by hiring. They raise a round, hire harder, produce more, hit the next milestone, raise again. The interesting question is: what does a speed advantage look like inside that <em>real</em> structure?</p>
+
+  <div class="pullquote">
+    A small per-person edge becomes a bigger round, which becomes a bigger team, which becomes a faster next round.
+    <cite>&mdash; The compounding loop</cite>
+  </div>
+
+  <h2>A better model</h2>
+
+  <p>Imagine two companies, both founded with five engineers. Each engineer produces "units of work" per day &mdash; abstract, but you can read it as shipped features, qualified leads, customer conversations, code, whatever your company's output actually is. Headcount grows continuously at a rate that steps up after each raise, because bigger rounds fund bigger hiring plans. Funding rounds aren't free events &mdash; they're unlocked when cumulative work crosses thresholds that represent proof of traction.</p>
+
+  <p>The thresholds are calibrated against <a href="https://carta.com/data/time-between-VC-rounds-2024/" target="_blank" rel="noopener">Carta's 2024 fundraising data</a>. The median startup now takes about <strong>18 months from seed to Series A, and two more years to Series B</strong>. Top-quartile companies can raise Series A in under a year, and hyperscalers (think Stripe, OpenAI, Anthropic) compress the first three rounds into about three years. That's the spread this model captures.</p>
+
+  <p>The fast company's engineers each produce 1.0 units per day. The slow company's each produce 0.8 &mdash; a 20% edge per head. That's a modest difference. You wouldn't notice it in a weekly standup. In a quarter, you might barely measure it.</p>
+
+  <p>But here's where it gets interesting. Because the fast company grows faster, it <strong>raises larger rounds at higher valuations</strong>. That's not a modeling assumption &mdash; it's how venture capital actually works. Growth rate drives valuation, and valuation drives round size. The fast company can hire at 12%/month post-Series A; the slow company, funded at a lower valuation, can only manage 5%/month. After Series B, the fast company's higher capitalization lets it attract better talent and invest in better tooling, so per-person productivity bumps another 15%.</p>
+
+  <p>Both companies hit their milestones the same way: by actually crossing a cumulative work threshold. No exogenous timing is imposed. The slow company eventually reaches every milestone the fast company does &mdash; it just takes longer.</p>
+
+  <div class="assumptions">
+    <div class="label">Model parameters</div>
+    <dl>
+      <dt>Seed team</dt><dd>5 engineers, both companies</dd>
+      <dt>Per-person output</dt><dd>Fast: 1.0 units/day &middot; Slow: 0.8 units/day</dd>
+      <dt>Funding trigger</dt><dd>Cumulative work (A: 2.2k &middot; B: 7.9k &middot; C: 35.4k units)</dd>
+      <dt>Hiring rate (monthly)</dt><dd>Fast: 3%/12%/13%/6% by stage &middot; Slow: 1.8%/5%/12%/5%</dd>
+      <dt>Productivity boost</dt><dd>Fast: +15% per person post-Series B</dd>
+      <dt>Hyperscaler benchmark</dt><dd>Anthropic &amp; OpenAI: Series C inside 3 years from seed</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="chart-section">
+  <div class="chart-inner">
+    <div class="chart-header">
+      <div class="chart-title">Hiring is the input. Work is the output. The gap compounds through both.</div>
+      <div class="chart-fignum">Fig. 01</div>
+    </div>
+
+    <div class="chart-block">
+      <div class="chart-label">
+        <span class="idx">A.</span>
+        <span>Headcount over time</span>
+        <span class="axis-note">People on the team, hiring spread over ~9 months after each raise</span>
+      </div>
+      <div class="legend">
+        <span><span class="sw-solid sw-fast"></span>Fast</span>
+        <span><span class="sw-solid sw-slow"></span>Slow</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chartHeadcount" role="img" aria-label="Headcount chart: fast company hits Series A at year 1 and ramps to 15 people by year 1.75, hits Series B at year 2.58 and ramps to 45 by year 3.3, hits Series C at year 3.60 and reaches 135 by year 5. Slow company hits Series A at year 1.25, Series B at year 3.55, never reaches C, ends at 28 people.">Fast company ends year 5 at 135 people, slow at 28.</canvas>
+      </div>
+    </div>
+
+    <div class="chart-block">
+      <div class="chart-label">
+        <span class="idx">B.</span>
+        <span>Cumulative work over time</span>
+        <span class="axis-note">Downstream of headcount &times; per-person output</span>
+      </div>
+      <div class="legend">
+        <span><span class="sw-solid sw-fast"></span>Fast</span>
+        <span><span class="sw-solid sw-slow"></span>Slow</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chartWork" role="img" aria-label="Cumulative work chart: fast company reaches 89,400 units by year 5, slow reaches 19,300. Fast curve bends upward as each hiring wave completes.">Fast company ends year 5 at 89k work units, slow at 19k — a 4.6x gap.</canvas>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="label">Series A lead</div><div class="value">4 <em>mo</em></div></div>
+      <div class="stat"><div class="label">Series C lead</div><div class="value">18 <em>mo</em></div></div>
+      <div class="stat"><div class="label">Headcount at year 5</div><div class="value">2.6<em>&times;</em></div></div>
+      <div class="stat"><div class="label">Output at year 5</div><div class="value">4.5<em>&times;</em></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Why the gap widens</h2>
+
+  <p>The chart shows three compounding effects stacked on top of each other. Each is modest on its own. Together they produce a gap that a 20% per-person edge, considered in isolation, would never predict.</p>
+
+  <div class="levers">
+    <div class="lever">
+      <div class="num">01</div>
+      <h4>Earlier milestones</h4>
+      <p>The fast company hits Series A four months sooner. By Series B the lead is a full year. By Series C, a year and a half. Small edges, applied to a threshold, compound into widening time-gaps at each round.</p>
+    </div>
+    <div class="lever">
+      <div class="num">02</div>
+      <h4>Faster hiring</h4>
+      <p>Higher growth rates earn higher valuations, which fund faster hiring. The fast company can grow headcount at 12% a month post-Series A; the slow company, at a lower valuation, has to stay at 5%. The same delta shows up at every subsequent stage.</p>
+    </div>
+    <div class="lever">
+      <div class="num">03</div>
+      <h4>Better talent</h4>
+      <p>Fast-growing companies with strong capitalization attract higher-quality hires and invest in better tooling. Per-person output rises another 15% after Series B, multiplying everything downstream.</p>
+    </div>
+  </div>
+
+  <h2>The slogan, properly stated</h2>
+
+  <p>"Move fast" is usually framed as motivation &mdash; something founders tell each other to justify all-nighters. But motivation is the wrong frame. Speed isn't a personality trait or a cultural value. It's a <em>position</em>. Your speed determines which equilibrium your company ends up in.</p>
+
+  <p>The fast company in this model doesn't end the simulation slightly ahead. It ends with 4.5x the output, a team 2.6x the size, at Series C eighteen months earlier, with compounding tailwinds that will continue to widen the gap next year and the year after. The slow company eventually reaches every milestone &mdash; it just reaches them later, at a smaller scale, with less momentum going into whatever's next. Not because it's doing anything wrong, but because it started 20% slower per head, and the funding ladder rewards the fast company with every rung.</p>
+
+  <div class="pullquote">
+    Speed doesn't just get you to the same place faster. It gets you to a <em>bigger</em> place, because scale is a function of time.
+    <cite>&mdash; The claim, in one sentence</cite>
+  </div>
+
+  <p>This is why founders who obsess over shaving a week off a launch, or closing a round a month early, or shipping one more feature per quarter, aren't being neurotic. They're responding correctly to the structure of the game they're playing. A small edge per day, sustained for a few years, puts you in a different league.</p>
+
+  <p>Moving fast compounds. The math works.</p>
+
+  <a href="../index.html" class="back-link">&larr; Back to index</a>
+</section>
+
+<footer>
+  <div><a href="../index.html">Jordan Meyer</a> &middot; <span class="accent">2026</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  const MAX_DAYS = 365 * 5;
+
+  function simulate(baseRate, rates, thresholds, prodBoostAtB) {
+    let headcount = 5;
+    let work = 0;
+    let rate = baseRate;
+    let stageKey = 'pre_a';
+    const stageAfter = { 'Series A': 'post_a', 'Series B': 'post_b', 'Series C': 'post_c' };
+    const milestones = [
+      { threshold: thresholds[0], name: 'Series A' },
+      { threshold: thresholds[1], name: 'Series B' },
+      { threshold: thresholds[2], name: 'Series C' }
+    ];
+    let nextM = 0;
+    const data = [];
+    const events = [];
+
+    for (let day = 0; day <= MAX_DAYS; day++) {
+      const monthly = rates[stageKey];
+      const dailyFactor = Math.pow(1 + monthly, 1 / 30);
+      headcount *= dailyFactor;
+      work += headcount * rate;
+      data.push({ x: day / 365, work: Math.round(work), people: headcount });
+
+      if (nextM < milestones.length && work >= milestones[nextM].threshold) {
+        const m = milestones[nextM];
+        stageKey = stageAfter[m.name];
+        if (m.name === 'Series B') rate = baseRate * prodBoostAtB;
+        events.push({ year: day / 365, name: m.name });
+        nextM++;
+      }
+    }
+    return { data, events };
+  }
+
+  const THRESHOLDS = [2205, 7854, 35426];
+  const fastRates = { pre_a: 0.03, post_a: 0.12, post_b: 0.13, post_c: 0.06 };
+  const slowRates = { pre_a: 0.018, post_a: 0.05, post_b: 0.12, post_c: 0.05 };
+
+  const fast = simulate(1.0, fastRates, THRESHOLDS, 1.15);
+  const slow = simulate(0.8, slowRates, THRESHOLDS, 1.0);
+
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const fastColor = isDark ? '#f0ebdf' : '#1a1a1a';
+  const slowColor = isDark ? '#6a655c' : '#a8a39a';
+  const accent = isDark ? '#e8593a' : '#c73e1d';
+  const muted = isDark ? '#8a857b' : '#78736c';
+  const gridColor = isDark ? 'rgba(240,235,223,0.06)' : 'rgba(26,26,26,0.06)';
+
+  const fastWork = fast.data.map(d => ({ x: d.x, y: d.work }));
+  const slowWork = slow.data.map(d => ({ x: d.x, y: d.work }));
+  const fastPeople = fast.data.map(d => ({ x: d.x, y: d.people }));
+  const slowPeople = slow.data.map(d => ({ x: d.x, y: d.people }));
+
+  const syncState = { year: null };
+
+  function makeMilestonePlugin() {
+    return {
+      id: 'milestoneLines',
+      afterDatasetsDraw(chart) {
+        const { ctx, chartArea, scales } = chart;
+        const xScale = scales.x;
+        const drawLine = (year, label, lineColor, boxBg, textColor, align) => {
+          const x = xScale.getPixelForValue(year);
+          if (x < chartArea.left || x > chartArea.right) return;
+          ctx.save();
+          ctx.strokeStyle = lineColor;
+          ctx.lineWidth = 1;
+          ctx.setLineDash([2, 3]);
+          ctx.beginPath();
+          ctx.moveTo(x, chartArea.top);
+          ctx.lineTo(x, chartArea.bottom);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.font = '500 10px "JetBrains Mono", monospace';
+          const textWidth = ctx.measureText(label).width;
+          const padX = 6;
+          const boxW = textWidth + padX * 2;
+          const boxH = 16;
+          const boxY = align === 'top' ? chartArea.top + 4 : chartArea.bottom - boxH - 4;
+          ctx.fillStyle = boxBg;
+          ctx.fillRect(x + 2, boxY, boxW, boxH);
+          ctx.fillStyle = textColor;
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label.toUpperCase(), x + 2 + padX, boxY + boxH / 2);
+          ctx.restore();
+        };
+        const fastBoxBg = accent;
+        const fastBoxText = '#ffffff';
+        const slowBoxBg = isDark ? '#d1ccc1' : '#4a4744';
+        const slowBoxText = isDark ? '#1c1a17' : '#faf7ef';
+        fast.events.forEach(e => drawLine(e.year, e.name, fastColor, fastBoxBg, fastBoxText, 'top'));
+        slow.events.forEach(e => drawLine(e.year, e.name, slowColor, slowBoxBg, slowBoxText, 'bottom'));
+      }
+    };
+  }
+
+  function makeCrosshairPlugin(valueFormatter) {
+    return {
+      id: 'syncedCrosshair',
+      afterDatasetsDraw(chart) {
+        if (syncState.year == null) return;
+        const { ctx, chartArea, scales } = chart;
+        const x = scales.x.getPixelForValue(syncState.year);
+        if (x < chartArea.left || x > chartArea.right) return;
+        ctx.save();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(x, chartArea.top);
+        ctx.lineTo(x, chartArea.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const nearestIdx = Math.min(chart.data.datasets[0].data.length - 1,
+                          Math.max(0, Math.round(syncState.year * 365)));
+        const readouts = [];
+        chart.data.datasets.forEach((ds) => {
+          const pt = ds.data[nearestIdx];
+          if (!pt) return;
+          const px = scales.x.getPixelForValue(pt.x);
+          const py = scales.y.getPixelForValue(pt.y);
+          if (py >= chartArea.top && py <= chartArea.bottom) {
+            ctx.fillStyle = ds.borderColor;
+            ctx.beginPath();
+            ctx.arc(px, py, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = isDark ? '#242019' : '#faf7ef';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+          readouts.push({ label: ds.label, value: pt.y, color: ds.borderColor });
+        });
+
+        ctx.font = '500 11px "JetBrains Mono", monospace';
+        const yearLabel = 'YEAR ' + syncState.year.toFixed(2);
+        const lines = [yearLabel, ...readouts.map(r => {
+          return r.label.toUpperCase() + '  ' + valueFormatter(r.value);
+        })];
+        const lineH = 16;
+        const boxW = Math.max(...lines.map(l => ctx.measureText(l).width)) + 20;
+        const boxH = lines.length * lineH + 12;
+        const boxX = chartArea.right - boxW - 8;
+        const boxY = chartArea.top + 8;
+        ctx.fillStyle = isDark ? '#0f0d0a' : '#ffffff';
+        ctx.fillRect(boxX, boxY, boxW, boxH);
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(boxX, boxY, boxW, boxH);
+        ctx.textBaseline = 'top';
+        lines.forEach((line, i) => {
+          if (i === 0) {
+            ctx.fillStyle = accent;
+          } else {
+            ctx.fillStyle = readouts[i - 1].color;
+            if (!isDark && ctx.fillStyle === '#a8a39a') {
+              ctx.fillStyle = '#5a5650';
+            }
+          }
+          ctx.fillText(line, boxX + 10, boxY + 8 + i * lineH);
+        });
+        ctx.restore();
+      }
+    };
+  }
+
+  const chartRegistry = [];
+
+  function baseOptions(yTitle, yMax, yTickCallback) {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      parsing: false,
+      animation: false,
+      interaction: { mode: 'nearest', axis: 'x', intersect: false },
+      events: ['mousemove', 'mouseout', 'touchstart', 'touchmove'],
+      onHover: (e) => {
+        if (!e || e.type === 'mouseout') {
+          syncState.year = null;
+        } else {
+          const chart = chartRegistry[0];
+          if (!chart) return;
+          const rect = e.native.target.getBoundingClientRect();
+          const x = e.native.clientX - rect.left;
+          const anyChart = chartRegistry.find(c => c.canvas === e.native.target) || chartRegistry[0];
+          const year = anyChart.scales.x.getValueForPixel(x);
+          if (year >= 0 && year <= 5) syncState.year = year;
+          else syncState.year = null;
+        }
+        chartRegistry.forEach(c => c.draw());
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: 0,
+          max: 5,
+          title: { display: true, text: 'YEARS', color: muted, font: { family: 'JetBrains Mono', size: 10, weight: '500' } },
+          ticks: { color: muted, font: { family: 'JetBrains Mono', size: 11 }, stepSize: 1 },
+          grid: { color: gridColor }
+        },
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: yTitle, color: muted, font: { family: 'JetBrains Mono', size: 10, weight: '500' } },
+          ticks: { color: muted, font: { family: 'JetBrains Mono', size: 11 }, callback: yTickCallback },
+          grid: { color: gridColor },
+          min: 0,
+          max: yMax
+        }
+      }
+    };
+  }
+
+  const headcountFormatter = v => Math.round(v).toLocaleString();
+  const workFormatter = v => v >= 1000 ? Math.round(v).toLocaleString() : Math.round(v).toString();
+
+  const headcountChart = new Chart(document.getElementById('chartHeadcount'), {
+    type: 'line',
+    data: {
+      datasets: [
+        { label: 'Fast', data: fastPeople, borderColor: fastColor, backgroundColor: fastColor, borderWidth: 2.5, pointRadius: 0, tension: 0.15 },
+        { label: 'Slow', data: slowPeople, borderColor: slowColor, backgroundColor: slowColor, borderWidth: 2.5, pointRadius: 0, tension: 0.15 }
+      ]
+    },
+    options: baseOptions('HEADCOUNT', 600, v => v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v),
+    plugins: [makeMilestonePlugin(), makeCrosshairPlugin(headcountFormatter)]
+  });
+
+  const workChart = new Chart(document.getElementById('chartWork'), {
+    type: 'line',
+    data: {
+      datasets: [
+        { label: 'Fast', data: fastWork, borderColor: fastColor, backgroundColor: fastColor, borderWidth: 2.5, pointRadius: 0 },
+        { label: 'Slow', data: slowWork, borderColor: slowColor, backgroundColor: slowColor, borderWidth: 2.5, pointRadius: 0 }
+      ]
+    },
+    options: baseOptions('CUMULATIVE WORK', 300000, v => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v),
+    plugins: [makeMilestonePlugin(), makeCrosshairPlugin(workFormatter)]
+  });
+
+  chartRegistry.push(headcountChart, workChart);
+</script>
+</body>
+</html>
