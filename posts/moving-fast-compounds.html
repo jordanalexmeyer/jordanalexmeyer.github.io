@@ -543,6 +543,8 @@
 
   <p>Imagine two companies, both founded with five engineers. Each engineer produces "units of work" per day &mdash; abstract, but you can read it as shipped features, qualified leads, customer conversations, code, whatever your company's output actually is. Headcount grows continuously at a rate that steps up after each raise, because bigger rounds fund bigger hiring plans. Funding rounds aren't free events &mdash; they're unlocked when cumulative work crosses thresholds that represent proof of traction.</p>
 
+  <p>The load-bearing assumption here is that <strong>work correlates strongly with revenue</strong>. Ship more, sell more, grow more. That's what a VC is actually underwriting at the next round &mdash; not raw output, but the revenue trajectory the output produces. When the model says "cumulative work crosses a threshold," read it as "the company hit the ARR milestone that unlocks the round." Everywhere downstream &mdash; larger rounds, higher valuations, faster hiring &mdash; flows from that same link.</p>
+
   <p>The thresholds are calibrated against <a href="https://carta.com/data/time-between-VC-rounds-2024/" target="_blank" rel="noopener">Carta's 2024 fundraising data</a>. The median startup now takes about <strong>18 months from seed to Series A, and two more years to Series B</strong>. Top-quartile companies can raise Series A in under a year, and hyperscalers (think Stripe, OpenAI, Anthropic) compress the first three rounds into about three years. That's the spread this model captures.</p>
 
   <p>The fast company's engineers each produce 1.0 units per day. The slow company's each produce 0.8 &mdash; a 20% edge per head. That's a modest difference. You wouldn't notice it in a weekly standup. In a quarter, you might barely measure it.</p>
@@ -555,8 +557,9 @@
     <div class="label">Model parameters</div>
     <dl>
       <dt>Seed team</dt><dd>5 engineers, both companies</dd>
+      <dt>Core assumption</dt><dd>Units of work correlate strongly with revenue; rounds are underwritten on the revenue trajectory that work produces</dd>
       <dt>Per-person output</dt><dd>Fast: 1.0 units/day &middot; Slow: 0.8 units/day</dd>
-      <dt>Funding trigger</dt><dd>Cumulative work (A: 2.2k &middot; B: 7.9k &middot; C: 35.4k units)</dd>
+      <dt>Funding trigger</dt><dd>Cumulative work crosses a threshold (proxy for the ARR milestone that unlocks the round) &mdash; A: 2.2k &middot; B: 7.9k &middot; C: 35.4k units</dd>
       <dt>Hiring rate (monthly)</dt><dd>Fast: 3%/12%/13%/6% by stage &middot; Slow: 1.8%/5%/12%/5%</dd>
       <dt>Productivity boost</dt><dd>Fast: +15% per person post-Series B</dd>
       <dt>Hyperscaler benchmark</dt><dd>Anthropic &amp; OpenAI: Series C inside 3 years from seed</dd>
