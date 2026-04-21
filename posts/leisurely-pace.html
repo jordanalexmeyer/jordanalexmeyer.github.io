@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get it done by tomorrow morning &mdash; Jordan Meyer</title>
+<meta name="description" content="Chung Ju-yung, the founder of Hyundai, on why time is the only thing everyone has in equal measure — and why almost nobody uses it seriously.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<meta property="og:title" content="Get it done by tomorrow morning">
+<meta property="og:description" content="Chung Ju-yung, the founder of Hyundai, on why time is the only thing everyone has in equal measure — and why almost nobody uses it seriously.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jordanalexmeyer.github.io/posts/leisurely-pace.html">
+<meta property="og:image" content="https://jordanalexmeyer.github.io/assets/og-leisurely-pace.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Get it done by tomorrow morning — Chung Ju-yung, founder of Hyundai">
+<meta property="article:author" content="Jordan Meyer">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Get it done by tomorrow morning">
+<meta name="twitter:description" content="Chung Ju-yung, the founder of Hyundai, on why time is the only thing everyone has in equal measure.">
+<meta name="twitter:image" content="https://jordanalexmeyer.github.io/assets/og-leisurely-pace.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-deep: #ebe4d3;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4744;
+    --ink-muted: #78736c;
+    --rule: #d9d2c0;
+    --accent: #c73e1d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a17;
+      --bg-deep: #141210;
+      --ink: #f0ebdf;
+      --ink-soft: #c9c3b4;
+      --ink-muted: #8a857b;
+      --rule: #3a362e;
+      --accent: #e8593a;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 32px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+  }
+  .masthead a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .masthead a:hover { color: var(--accent); }
+  .masthead .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 32px 60px;
+    position: relative;
+  }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kicker::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    max-width: 200px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+    max-width: 1000px;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    max-width: 900px;
+  }
+  .meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .meta-item .value {
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 32px;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 60px 0 28px;
+  }
+  p {
+    margin-bottom: 1.2em;
+    color: var(--ink-soft);
+  }
+  p.lead {
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-weight: 400;
+    margin-bottom: 1.4em;
+  }
+  p.lead::first-letter {
+    font-size: 4.5em;
+    font-weight: 500;
+    float: left;
+    line-height: 0.85;
+    margin: 0.08em 0.08em 0 0;
+    color: var(--accent);
+    font-style: italic;
+  }
+  em { font-style: italic; }
+  strong { font-weight: 500; color: var(--ink); }
+  p a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  p a:hover {
+    color: var(--accent);
+    background: rgba(199, 62, 29, 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    p a:hover { background: rgba(232, 89, 58, 0.1); }
+  }
+  blockquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    margin: 32px 0;
+    padding: 8px 0 8px 28px;
+    border-left: 2px solid var(--accent);
+    color: var(--ink);
+  }
+  blockquote p { color: var(--ink); margin-bottom: 0.6em; }
+  blockquote p:last-child { margin-bottom: 0; }
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin: 60px -20px;
+    padding: 40px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    text-align: left;
+  }
+  .pullquote::before {
+    content: "\201C";
+    display: block;
+    font-size: 1.5em;
+    line-height: 0.5;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .pullquote cite {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    margin-top: 24px;
+  }
+  figure.photo {
+    max-width: 1100px;
+    margin: 72px auto;
+    padding: 0 32px;
+  }
+  figure.photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--rule);
+  }
+  figure.photo figcaption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  figure.photo figcaption .credit { color: var(--ink-muted); }
+  .endnote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    padding-top: 40px;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-top: 40px;
+    transition: color 0.15s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 80px;
+    padding: 40px 32px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+  }
+  footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  footer a:hover { color: var(--accent); }
+  footer .accent { color: var(--accent); }
+  @media (max-width: 640px) {
+    .hero { padding: 48px 24px 40px; }
+    .section { padding: 28px 24px; }
+    .pullquote { margin: 40px 0; padding: 32px 0; }
+    .masthead { padding: 16px 24px; }
+    blockquote { font-size: 19px; padding-left: 20px; }
+    figure.photo { margin: 48px auto; padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="masthead">
+  <div><a href="../index.html"><span class="dot"></span>Jordan Meyer</a></div>
+  <div><a href="../index.html">&larr; Index</a></div>
+</div>
+
+<header class="hero">
+  <div class="kicker">A biography note &middot; On time</div>
+  <h1>Get it done <em>by tomorrow morning.</em></h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="label">Subject</div>
+      <div class="value">Chung Ju-yung, founder of Hyundai</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Source</div>
+      <div class="value">His autobiography, one Monday morning</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">The claim</div>
+      <div class="value">The whole philosophy in six words</div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <p class="lead">Every Monday at our team kickoff, I share a quote from a book I've been reading. This week's came from the autobiography of the man who built Hyundai.</p>
+
+  <h2>Who was Chung Ju-yung?</h2>
+
+  <p>If you don't know the name, think of him as the Korean Elon Musk &mdash; except he built his empire out of a country that had been flattened by war. Chung founded Hyundai and became one of the most consequential Koreans of the last century. He built much of modern Korea's physical infrastructure: roads, power plants, shipyards.</p>
+
+  <p>He lived through the Great Depression, the Japanese occupation, the Korean War, and a sequence of regime changes that stripped him of his businesses more than once.</p>
+
+  <p>He kept going anyway.</p>
+</section>
+
+<figure class="photo">
+  <img src="../assets/chung-ju-yung.jpg" alt="Chung Ju-yung, founder of Hyundai, seated at a desk in front of two globes, wearing a dark suit, black-and-white portrait.">
+  <figcaption>
+    <span>Chung Ju-yung in his office, Seoul</span>
+    <span class="credit">Archival photograph</span>
+  </figcaption>
+</figure>
+
+<section class="section">
+  <h2>The quote</h2>
+
+  <p>Here is what he wrote about how most people spend their time:</p>
+
+  <blockquote>
+    <p>Everybody wants to enjoy life comfortably at a leisurely pace. However, I think there is nothing more foolish than living a life according to the mantra of "doing enough just to get by," not knowing how precious one's time is.</p>
+  </blockquote>
+
+  <blockquote>
+    <p>These remarkable people did not take two or three lifetimes to accomplish what they did. They did it in one.</p>
+  </blockquote>
+
+  <blockquote>
+    <p>When work needs to be done, there are those who get it done immediately and others who procrastinate&hellip; For these reasons, I never give my workers a lot of time to finish a task. "Get it done by tomorrow morning."</p>
+  </blockquote>
+
+  <p>Read that last line again. It is the whole philosophy in six words.</p>
+
+  <h2>Procrastination compounds</h2>
+
+  <p>Procrastination is almost invisible in the short term. A day slips. Then a week. You barely notice. Compounded over years, it becomes the quiet difference between companies that ship and companies that don't &mdash; between the person who could have come in first and the one who finishes last.</p>
+
+  <p>Chung's insight wasn't that talent is rare. It was that <strong>time is the one thing everyone has in equal measure</strong>, and almost nobody uses it seriously.</p>
+
+  <div class="pullquote">
+    These remarkable people did not take two or three lifetimes to accomplish what they did. They did it in one.
+    <cite>&mdash; Chung Ju-yung</cite>
+  </div>
+
+  <h2>How we try to live this at Extend</h2>
+
+  <p>At my company, we try to apply this by setting tight deadlines and holding each other to them. We don't always get it right. That's exactly why we keep reminding each other. I'm still working on it myself.</p>
+
+  <p>The hardest part isn't believing the quote. It's acting like I believe it.</p>
+
+  <h2>A question for your Monday</h2>
+
+  <p>What is the thing you have been letting slip at a "leisurely pace"?</p>
+
+  <p>The honest answer is probably also the most important thing you could work on this week.</p>
+
+  <p><strong>Get it done by tomorrow morning.</strong></p>
+
+  <div class="endnote">Essay No. 02 &middot; On biographies</div>
+
+  <a href="../index.html" class="back-link">&larr; Back to index</a>
+</section>
+
+<footer>
+  <div><a href="../index.html">Jordan Meyer</a> &middot; <span class="accent">2026</span></div>
+</footer>
+</body>
+</html>

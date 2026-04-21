@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#f5f1e8"/>
+  <circle cx="80" cy="82" r="9" fill="#c73e1d"/>
+  <text x="105" y="90" font-family="Menlo, 'Courier New', monospace" font-size="18" fill="#78736c" letter-spacing="3">JORDAN MEYER · ESSAY NO. 02</text>
+
+  <text x="80" y="310" font-family="Georgia, 'Times New Roman', serif" font-size="104" fill="#1a1a1a" letter-spacing="-3">Get it done</text>
+  <text x="80" y="425" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="104" fill="#c73e1d" letter-spacing="-3">by tomorrow morning.</text>
+
+  <line x1="80" y1="540" x2="1120" y2="540" stroke="#d9d2c0" stroke-width="1"/>
+  <text x="80" y="585" font-family="Menlo, 'Courier New', monospace" font-size="15" fill="#78736c" letter-spacing="3">CHUNG JU-YUNG · FOUNDER OF HYUNDAI</text>
+  <text x="1120" y="585" text-anchor="end" font-family="Menlo, 'Courier New', monospace" font-size="15" fill="#78736c" letter-spacing="3">2026</text>
+</svg>
