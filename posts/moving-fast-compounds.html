@@ -547,26 +547,26 @@
 <section class="section">
   <p class="lead">Sam Altman once <a href="https://twitter.com/sama/status/1345140364995227648" target="_blank" rel="noopener">tweeted</a> that moving fast compounds. It's one of those claims that sounds true and gets retweeted, but is rarely proven. The math, it turns out, works &mdash; and the mechanism is more interesting than the slogan suggests.</p>
 
-  <p>The easy version goes like this. If two companies grow exponentially but at different rates, the absolute gap between them grows exponentially. The ratio of their sizes also grows exponentially. If you ship at rate <em>k</em> and your competitor ships at <em>k/s</em>, the ratio of your size to theirs is:</p>
+  <p>The simple version goes like this. If two companies grow exponentially but at different rates, the absolute gap between them grows exponentially. The ratio of their sizes also grows exponentially. If you ship at rate <em>k</em> and your competitor ships at <em>k/s</em>, the ratio of your size to theirs is:</p>
 
   <div class="math">R_you(t) / R_them(t) = e^(k(1 &minus; 1/s) t)</div>
 
-  <p>This is true and useful as a first cut. But it's abstract. It assumes growth just <em>happens</em> at some rate, which isn't how startups actually work. Startups grow by hiring. They raise a round, hire harder, produce more, hit the next milestone, raise again. The interesting question is: what does a speed advantage look like inside that <em>real</em> structure?</p>
+  <p>This is true and useful but it's oversimplified It assumes growth just <em>happens</em> at some continuous rate, which isn't how startups actually work. Startups grow by hiring. They raise a round, hire, produce more, hit the next milestone, raise again, repeat. The interesting question is: what does a speed advantage look like inside that <em>real</em> structure?</p>
 
   <div class="pullquote">
-    A small per-person edge becomes a bigger round, which becomes a bigger team, which becomes a faster next round.
+    A small per-person productivity edge becomes a bigger round, which becomes a bigger team, which becomes a faster next round.
     <cite>&mdash; The compounding loop</cite>
   </div>
 
   <h2>A better model</h2>
 
-  <p>Imagine two companies, both founded with five engineers. Each engineer produces "units of work" per day &mdash; abstract, but you can read it as shipped features, qualified leads, customer conversations, code, whatever your company's output actually is. Headcount grows continuously at a rate that steps up after each raise, because bigger rounds fund bigger hiring plans. Funding rounds aren't free events &mdash; they're unlocked when cumulative work crosses thresholds that represent proof of traction.</p>
+  <p>Imagine two companies, both founded with five engineers. Each engineer produces "units of work" per day &mdash; abstract, but you can read it as shipped features, qualified leads, customer conversations, code, whatever your company's output actually is. Headcount grows continuously at a rate that steps up after each raise, because bigger rounds fund bigger hiring plans. Funding rounds are unlocked when cumulative work crosses thresholds that represent proof of traction.</p>
 
-  <p>The load-bearing assumption here is that <strong>work correlates strongly with revenue</strong>. Ship more, sell more, grow more. That's what a VC is actually underwriting at the next round &mdash; not raw output, but the revenue trajectory the output produces. When the model says "cumulative work crosses a threshold," read it as "the company hit the ARR milestone that unlocks the round." Everywhere downstream &mdash; larger rounds, higher valuations, faster hiring &mdash; flows from that same link.</p>
+  <p>The assumption here is that <strong>units of work correlates strongly with revenue</strong>. This isn't perfect because it depends on another variable: execution. But if we can assume execution is the same between the companies, then we can assume work is directly correlated to revenues. Therefore, if you ship more, you sell more, and you grow more.
 
   <p>The fast company's engineers each produce 1.0 units per day. The slow company's each produce 0.8 &mdash; a 20% edge per head. That's a modest difference. You wouldn't notice it in a weekly standup. In a quarter, you might barely measure it.</p>
 
-  <p>But here's where it gets interesting. Because the fast company grows faster, it <strong>raises larger rounds at higher valuations</strong>. That's not a modeling assumption &mdash; it's how venture capital actually works. Growth rate drives valuation, and valuation drives round size. The fast company can hire at 12%/month post-Series A; the slow company, funded at a lower valuation, can only manage 5%/month. After Series B, the fast company's higher capitalization lets it attract better talent, so per-person productivity bumps another 15%.</p>
+  <p>But here's where it gets interesting. Because the fast company grows faster, it <strong>raises larger rounds at higher valuations</strong>. When raising venture capital, growth rate drives valuation, and valuation drives round size. Because the company has more funds, we assume it can hire more people &mdash; the fast company can hire at 12%/month post-Series A while the slow company can only manage 5%/month. After Series B, the fast company's higher capitalization lets it attract better talent, so per-person productivity bumps another 15%.</p>
 
   <p>Both companies hit their milestones the same way: by actually crossing a cumulative work threshold. The slow company eventually reaches every milestone the fast company does &mdash; it just takes longer.</p>
 
@@ -654,9 +654,9 @@
 
   <h2>The slogan, properly stated</h2>
 
-  <p>"Move fast" is usually framed as motivation &mdash; something founders tell each other to justify all-nighters. But motivation is the wrong frame. Speed isn't a personality trait or a cultural value. It's a <em>position</em>. Your speed determines which equilibrium your company ends up in.</p>
+  <p>"Move fast" is usually seen as a motivational platitude &mdash; something founders tell their employees to justify all-nighters. But this simulation shows that it's the difference between being worth a $1B leader and a ~$200m laggard.</p>
 
-  <p>The fast company in this model doesn't end the simulation slightly ahead. It ends with 4.5x the output, a team 2.6x the size, at Series C eighteen months earlier, with compounding tailwinds that will continue to widen the gap next year and the year after. The slow company eventually reaches every milestone &mdash; it just reaches them later, at a smaller scale, with less momentum going into whatever's next. Not because it's doing anything wrong, but because it started 20% slower per head, and the funding ladder rewards the fast company with every rung.</p>
+  <p>The fast company in this model doesn't end the simulation slightly ahead. It ends with 4.5x the output, a team 2.6x the size, at Series C eighteen months earlier, with compounding tailwinds that will continue to widen the gap next year and the year after. The slow company eventually reaches every milestone &mdash; it just reaches them later, at a smaller scale, with less momentum going into whatever's next.
 
   <p>You can measure speed two ways. By milestone &mdash; "they reach Series C a year earlier" &mdash; or by time: "at year 5, they're 2.6&times; the size." The first framing makes speed feel like a shortcut. The second shows what it actually is: a permanent gap at every moment in the future.</p>
 
